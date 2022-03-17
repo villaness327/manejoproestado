@@ -40,7 +40,7 @@ function UseState({name}){
             <h2>Eliminar {name}</h2>
             <p>Por favor, escribe el codigo de seguridad.</p>
             {error && (<p>Error: El código es incorrecto</p>)}
-            {loading && (<p>Loading...</p>)}
+            {loading && (<p>Cargando...</p>)}
             <div><input placeholder="Codigo de seguridad"/><button onClick={()=>setLoading(!loading)}>Comprobar</button></div> 
             
         </div>

@@ -1,16 +1,22 @@
 import React from 'react';
 
-//Creacion de un react hook de estado, mediante Componentes
+//Creacion de un react hook de estado, mediante React.useState
 
 
-function UseState(){
+function UseState({name}){
+
+   const [error,setError]=React.useState(true);
+   const [loading,setLoading]=React.useState(false);
+   //Se crea el estado
 
     return (
         <div>
-            <h2>Eliminar UseState</h2>
+            <h2>Eliminar {name}</h2>
             <p>Por favor, escribe el codigo de seguridad.</p>
-            <input placeholder="Codigo de seguridad"/>
-            <button>Comprobar</button>
+            {error && (<p>Error: El código es incorrecto</p>)}
+            {loading && (<p>Loading...</p>)}
+            <div><input placeholder="Codigo de seguridad"/><button onClick={()=>setLoading(!error)}>Comprobar</button></div> 
+            
         </div>
     );  
 

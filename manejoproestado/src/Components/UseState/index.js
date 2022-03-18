@@ -4,52 +4,78 @@ import React from 'react';
 
 const CODE_SEC="paradigma";
 
+//Creacion de Estados compuestos en React.useState
+
 function UseState({name}){
 
-   const [error,setError]=React.useState(false);
-   const [loading,setLoading]=React.useState(false);
-   const [value,setValue]=React.useState('');
-   //Se crea el estado
+  const [state, setState]=React.useState({
+    error:false,
+    loading:false,
+    value:'',
+  });
 
 
-   React.useEffect(()=>{
-
-  
+//    const [error,setError]=React.useState(false);
+//    const [loading,setLoading]=React.useState(false);
+//    const [value,setValue]=React.useState('');
+//    //Se crea el estado
+    console.log(state);
+    console.log(state.value);
+    React.useEffect(()=>{      
+     
         console.log("Empezando efecto useEffect");
 
-
-        if (!!loading){ //Si Loading es True
+        if (!!state.loading){ //Si Loading es True
 
             setTimeout(()=>{
 
                  console.log("Consulta al  BackEnd");
 
-                 if(value === CODE_SEC){
-                    setLoading(false);   
-                    setError(false);
+                 if(state.value === CODE_SEC){
+                   
+                   setState({
+                    ...state,
+                    loading:false,
+                    error:false,
+                   });                 
+             
                  }else{
-                    setLoading(false);
-                    setError(true);
-                 }
-               
+                    setState({
+                        ...state,
+                        loading:false,
+                        error:true,
+                       });
+                 }               
 
             },3000); //Se espera 3 seg para ejecutarse
         }
 
         console.log("Terminando el efecto useEffect");
 
-   },[loading]) //Se ejecuta solo cuando cambia el estado de Loading
+   },[state.loading]) //Se ejecuta solo cuando cambia el estado de Loading
 
     return (
         <div>
             <h2>Eliminar {name}</h2>
             <p>Por favor, escribe el codigo de seguridad.</p>
-            {(error && !loading) &&(<p>Error: El código es incorrecto</p>)}
-            {loading && (<p>Cargando...</p>)}
-            <div><input placeholder="Codigo de seguridad" value={value} 
-                onChange={(event)=>setValue(event.target.value)}/>
+            {(state.error && !state.loading) &&(<p>Error: El código es incorrecto</p>)}
+            {state.loading && (<p>Cargando...</p>)}
+            <div><input placeholder="Codigo de seguridad" value={state.value} 
+                onChange={(event)=>{
+                
+                    setState({
+                        ...state,
+                         value:event.target.value,
+                       });                
+                    
+                     } }/>
                 <button onClick={()=>{
-                    setLoading(true);               
+
+                    setState({
+                        ...state,
+                        loading:true,                       
+                       });  
+                               
                     
                     }}>Comprobar</button>
             </div> 
@@ -57,6 +83,4 @@ function UseState({name}){
         </div>
     );  
 }
-
-
 export {UseState};

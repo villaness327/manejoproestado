@@ -11,11 +11,9 @@ componentWillUnmount(){
  //Metodo de ciclo de vida, que se ejecuta cuando de desmonta un componente   
 
 }
-
-
         render(){
                 return (
-                 <p>Cargandoooooo...</p>
+                 <p>Cargando...</p>
                 
                 );            
         }  

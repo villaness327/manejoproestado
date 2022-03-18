@@ -3,6 +3,7 @@ import React from 'react';
 
 import {Loading} from  '../Loading'; //Se importa el componente
 
+const CODE_SEC="paradigma";
 
 class ClassState extends React.Component{
 //hereda todas las propiedades y metodos de React.Component
@@ -13,11 +14,13 @@ constructor(props){
     super(props); //Se envian las props a la clase que estamos heredando
     
         this.state={
-        error:true,
-        loading:true,        
+        value:'',    
+        error:false,
+        loading:false,        
     }
     //Se genera un objeto, y cada estado que se quiera crear es un elemento del objeto
 }
+
 
 
 /* Metodos del Ciclo de Vida, se ejecutan en este orden:
@@ -51,38 +54,52 @@ constructor(props){
 
         console.log('Actualizacion');
 
-        if(!!this.state.loading){ //Solo Si loading es true
+        if(!!this.state.loading){ // Si loading es true
 
            setTimeout(()=>{
 
                 console.log('haciendo validacion');
-                this.setState({loading:false});//Se modifica el estado a falso, eso hace que se ejecute el
-                //componentWillUnmount por que se desrenderiza el componente.
 
+                if(CODE_SEC===this.state.value){
+                   this.setState({loading:false,error:false});
+
+                }else{
+                    this.setState({loading:false,error:true});                
+                }
+
+              
                 console.log('Terminando la validación');
 
            },3000)
 
         }
-
-
-
     }
      
         render(){
+            console.log(this.state.value);
                 return (
                     <div>
                         <h2>Eliminar {this.props.name}</h2>
                         <p>Por favor, escribe el codigo de seguridad.</p>
-                        {this.state.error && (<p>Error: El código es incorrecto</p>)}
+                        {(this.state.error && !this.state.loading) && (<p>Error: El código es incorrecto</p>)}
+                                            
                         {this.state.loading && (<Loading/>)}
-                        <div><input placeholder="Codigo de seguridad"/><button onClick={()=>
-            
+                        <div><input placeholder="Codigo de seguridad"
+                        onChange={(event)=>{
+                            this.setState({value:event.target.value});
+                          //En esta parte se activa el mensaje de actualizacion de componentDidUpdate
+                          //por q se esta actualizando un estado (value).
+                        }}                        
+                        /><button onClick={()=>            
                            // Forma 1: this.setState(prevState=>({error:!prevState.error}))}>Comprobar</button></div> 
-                          
                            // Forma 2:
                             //this.setState(()=>({error:!this.state.error}))}>Comprobar</button></div> 
-                            this.setState(()=>({loading:true}))}>Comprobar</button></div>
+                            this.setState(()=>(
+                                
+                                {
+                                loading:true                             
+                                
+                                }))}>Comprobar</button></div>
                     </div>
                 );            
         }  

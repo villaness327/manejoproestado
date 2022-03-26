@@ -25,6 +25,7 @@ function UseState({name}){
 
 
    const onConfirm=()=>{
+
       setState({
         ...state,
         loading:false,
@@ -35,6 +36,7 @@ function UseState({name}){
 
 
     const onError=()=>{
+
       setState({
         ...state,
         loading:false,
@@ -43,6 +45,7 @@ function UseState({name}){
     }
 
     const onWrite=(newValue)=>{
+
       setState({
         ...state,
          value:newValue,
@@ -50,6 +53,7 @@ function UseState({name}){
     }
 
     const onCheck=()=>{
+
       setState({
         ...state,
         loading:true,                       
@@ -57,6 +61,7 @@ function UseState({name}){
     }
 
     const onDelete=()=>{
+
       setState({
         ...state,//Estado anterior, para preparar su modificacion 
         delete:true,
@@ -64,6 +69,7 @@ function UseState({name}){
       }
 
      const onReset=()=>{
+       
       setState({
         ...state,
         confirm:false,

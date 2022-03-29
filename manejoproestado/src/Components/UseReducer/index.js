@@ -31,11 +31,11 @@ const [state,dispatch]=React.useReducer(reducer,initialState);
 
                  if(state.value === CODE_SEC){
                    
-                  dispatch({type:'CONFIRM'});            
+                  dispatch({type:actionTypes.confirm});            
              
                  }else{
               
-                  dispatch({type:'ERROR'});     
+                  dispatch({type:actionTypes.error});     
                  }               
 
             },3000); //Este bloque espera 3 segundos para ejecutarse
@@ -59,12 +59,12 @@ if(!state.delete && !state.confirm){ //Pantallas iniciales
                             onChange={(event)=>{
                             
                                    // onWrite(event.target.value); 
-                                    dispatch({type:'WRITE', payload:event.target.value});           
+                                    dispatch({type:actionTypes.write, payload:event.target.value});           
                                 
                                 } }/>
                             <button onClick={()=>{
                             
-                                    dispatch({type:'CHECK'});
+                                    dispatch({type:actionTypes.check});
                                 }}>Comprobar</button>
                         </div> 
                         
@@ -81,13 +81,13 @@ if(!state.delete && !state.confirm){ //Pantallas iniciales
           <p>Por favor, confirma, si deseas eliminar </p>
           <button onClick={()=>{
 
-          dispatch({type:'DELETE'});
+          dispatch({type:actionTypes.delete});
 
           }}>Sí, eliminar.</button>          
           
           <button  onClick={()=>{
             
-          dispatch({type:'RESET'});
+          dispatch({type:actionTypes.reset});
               
           }}  >No, no deseo eliminar.</button>
         </React.Fragment>
@@ -104,7 +104,7 @@ if(!state.delete && !state.confirm){ //Pantallas iniciales
 
                <button onClick={()=>{
 
-                dispatch({type:'RESET'});
+                dispatch({type:actionTypes.reset});
 
                }}>No!!!, deseo volver atrás!!!.</button>
          </React.Fragment>
@@ -121,38 +121,50 @@ const initialState={
     confirm:false,
   }
 
+
+    const actionTypes={
+
+    confirm:'CONFIRM',
+    error:'ERROR',
+    check:'CHECK',
+    write:'WRITE',
+    delete:'DELETE',
+    reset:'RESET',
+    }
+
+
   //return implicito
   const reducerObject=(state,payload)=>({
 
-        'CONFIRM':{            
+        [actionTypes.confirm]:{            
         ...state,
         loading:false,
         error:false,
         confirm:true,
         },
 
-        'ERROR':{
+        [actionTypes.error]:{
         ...state,
         loading:false,
         error:true,
         },
 
-        'CHECK':{
+        [actionTypes.check]:{
         ...state,
         loading:true,
         },
 
-        'WRITE':{
+        [actionTypes.write]:{
         ...state,
         value:payload,    
         },
 
-        'DELETE':{
+        [actionTypes.delete]:{
         ...state,//Estado anterior, para preparar su modificacion 
         delete:true,
         },
 
-        'RESET':{
+        [actionTypes.reset]:{
         ...state,
         confirm:false,
         delete:false,
@@ -160,8 +172,6 @@ const initialState={
 
         }
   });
-
-
 
 const reducer=(state,action)=>{
 
@@ -171,7 +181,7 @@ const reducer=(state,action)=>{
 
         }else{
             
-            return state;
+            return state; //Si no encuentra el Action Type retorna el estado.
 
         }
 };

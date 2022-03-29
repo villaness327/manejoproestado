@@ -11,7 +11,7 @@ function UseState({name}){
     const [state, setState]=React.useState({
     error:false,
     loading:false,
-    value:'',
+    value:'paradigma',
     delete:false,
     confirm:false,
   });

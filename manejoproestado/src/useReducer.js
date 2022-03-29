@@ -29,7 +29,7 @@ const reducerIF =(state,action)=>{
             ...state,
             loading:true,
          };
-    }else{
+    }else{ //Valor por default
 
        return{ //Retorna un objeto
          ...state,
@@ -66,9 +66,7 @@ const reducerSwitch=(state,action)=>{
                    ...state,
 
                 }
-
         }
-
 }
 
 //3era forma de crear un reducer mediante object
@@ -90,7 +88,7 @@ const reducerObject=(state,action)=>{
 
 }
 
-
+//Reducer
     const reducer=(state,action)=>{
         if(reducerObject(state)[action.type]){//Se valida si existe
                 return reducerObject(state)[action.type];
@@ -99,6 +97,4 @@ const reducerObject=(state,action)=>{
             return state;    
 
         };
-
-
     }

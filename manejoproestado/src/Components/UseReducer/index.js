@@ -19,6 +19,14 @@ const [state,dispatch]=React.useReducer(reducer,initialState);
     console.log(state);
     console.log(state.value);
 
+    const onConfirm=()=>dispatch({type:actionTypes.confirm}); 
+    const onError=()=>dispatch({type:actionTypes.error}); 
+    const onWrite=(event)=>dispatch({type:actionTypes.write,payload:event.target.value});        
+    const onCheck=()=>dispatch({type:actionTypes.check}); 
+    const onDelete=()=>dispatch({type:actionTypes.delete}); 
+    const onReset=()=>dispatch({type:actionTypes.reset}); 
+       
+
     React.useEffect(()=>{      
      
         console.log("Empezando efecto useEffect");
@@ -31,11 +39,11 @@ const [state,dispatch]=React.useReducer(reducer,initialState);
 
                  if(state.value === CODE_SEC){
                    
-                  dispatch({type:actionTypes.confirm});            
+                         onConfirm();       
              
                  }else{
               
-                  dispatch({type:actionTypes.error});     
+                         onError();    
                  }               
 
             },3000); //Este bloque espera 3 segundos para ejecutarse
@@ -56,16 +64,8 @@ if(!state.delete && !state.confirm){ //Pantallas iniciales
                         {state.loading && (<p>Cargando, espere un momento...</p>)}
                         {(state.error && !state.loading) &&(<p>Error: El código es incorrecto</p>)}
                         <div><input placeholder="Codigo de seguridad" value={state.value} 
-                            onChange={(event)=>{
-                            
-                                   // onWrite(event.target.value); 
-                                    dispatch({type:actionTypes.write, payload:event.target.value});           
-                                
-                                } }/>
-                            <button onClick={()=>{
-                            
-                                    dispatch({type:actionTypes.check});
-                                }}>Comprobar</button>
+                            onChange={onWrite}/>
+                            <button onClick={onCheck}>Comprobar</button>
                         </div> 
                         
                     </div>
@@ -81,15 +81,11 @@ if(!state.delete && !state.confirm){ //Pantallas iniciales
           <p>Por favor, confirma, si deseas eliminar </p>
           <button onClick={()=>{
 
-          dispatch({type:actionTypes.delete});
+          onDelete();
 
           }}>Sí, eliminar.</button>          
           
-          <button  onClick={()=>{
-            
-          dispatch({type:actionTypes.reset});
-              
-          }}  >No, no deseo eliminar.</button>
+          <button  onClick={onReset}  >No, no deseo eliminar.</button>
         </React.Fragment>
       
         );
@@ -102,11 +98,7 @@ if(!state.delete && !state.confirm){ //Pantallas iniciales
 
               <p>Eliminación con éxito</p>
 
-               <button onClick={()=>{
-
-                dispatch({type:actionTypes.reset});
-
-               }}>No!!!, deseo volver atrás!!!.</button>
+               <button onClick={onReset}>No!!!, deseo volver atrás!!!.</button>
          </React.Fragment>
 
         );
